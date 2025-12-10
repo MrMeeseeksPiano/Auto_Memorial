@@ -1,0 +1,43 @@
+import pdfplumber
+import re
+from docxtpl import DocxTemplate
+
+rotulos = ['CEP','Nome','Endereco','Telefone','Email','Qtd_mod','Qtd_inv','Pot_nom']
+rotulos_pdf = ['CEP da UC com GD','Nome do Titular da UC com GD','Endereço','Telefone do Titular \(DDD \+ número\)','E-mail do Titular da UC com GD','Quantidade de Módulos','Quantidade de Inversores','Potência Total dos Módulos \(kW\)']
+dicionario = {}
+
+with pdfplumber.open("D:/UnB/Python Stuff/dados.pdf") as pdf:
+    first_page = pdf.pages[0]
+    pdf_text = first_page.extract_text()
+    print (pdf_text)
+
+def valor(label, texto):
+    padrao = rf'{label}:\s*(.+)'
+    encontrado = re.search(padrao, texto, re.IGNORECASE)
+    return encontrado.group(1).strip()
+
+i = 0
+for rotulo in rotulos:
+    dicionario[rotulo]=valor(rotulos_pdf[i],pdf_text)
+    i += 1
+
+Pot_ano = float(dicionario['Pot_nom'].replace(',','.')) * 128 * 12
+Pot_ano_rounded = str(int(Pot_ano // 1)) 
+dicionario['Pot_ano_rounded'] = Pot_ano_rounded
+dicionario['Area_mod']= valor('Área Total dos Arranjos \(m²\)',pdf_text)
+Qtd_mod_var = int(dicionario['Qtd_mod'])
+Area_mod_total = str(float (dicionario['Area_mod'].replace(',','.')) * Qtd_mod_var)
+dicionario['Area_mod_total'] = Area_mod_total
+
+template = 'D:/UnB/Python Stuff/Memorial Descritivo - Template.docx'
+output = 'Memorial Preenchido Teste.docx'
+
+try:
+    doc = DocxTemplate(template)
+    doc.render(dicionario)
+    doc.save(output)
+    print(f"\nSUCESSO: Documento preenchido salvo como: {output}")
+
+except Exception as e:
+    print(f"\nERRO ao preencher o documento com Docxtpl. Verifique se o template Word está fechado e o caminho correto. Detalhes: {e}")
+
