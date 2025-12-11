@@ -37,7 +37,8 @@ gerador_astronergy = {
     'Corrente_nom': '9,45 A',
     'Corrente_cc': '9,94 A',
     'axlxp': '1960 x 992 x 40 mm',
-    'Peso': '21,8 kg'
+    'Peso': '21,8 kg',
+    'Imagem_gerador':'Imagens/Trina_gerador.jpg'
 }
 
 gerador_canadian = {'Fabricante':'Canadian Solar',
@@ -52,7 +53,58 @@ gerador_canadian = {'Fabricante':'Canadian Solar',
                     'Corrente_cc':'9,45 A',
                     'axlxp':'1990 x 992 x 40 mm',
                     'Peso':'22,4 kg',
+                    'Imagem_gerador':'Imagens/Trina_gerador.jpg'
                     }
+
+gerador_gokin = {
+    'Fabricante': 'Gokin',
+    'SIGLA': 'GK-1-72HT585M',
+    'Tec_construcao': 'Monocristalino',
+    'Garantia': '12 anos',
+    'Pot_max': '585 W',
+    'Eficiencia': '22,6%',
+    'Tensao_nom': '42.74 V',
+    'Tensao_aberto': '51.67 V',
+    'Corrente_nom': '13.69 A',
+    'Corrente_cc': '14.43 A',
+    'axlxp': '2310x1125x1259mm',
+    'Peso': '26,8 kg',
+    'Imagem_gerador':'Imagens/Trina_gerador.jpg'
+}
+
+gerador_hanersun_585 = {
+    'Fabricante': 'Hanersun',
+    'SIGLA': 'HN18-72H585',
+    'Tec_construcao': 'Monocristalino',
+    'Garantia': '12 anos',
+    'Pot_max': '585 W',
+    'Eficiencia': '22,65%',
+    'Tensao_nom': '40,80 V',
+    'Tensao_aberto': '49,30 V',
+    'Corrente_nom': '10,91 A',
+    'Corrente_cc': '11,53 A',
+    'axlxp': '2278*1134*30mm',
+    'Peso': '28,5 kg',
+    'Imagem_gerador':'Imagens/Trina_gerador.jpg'
+}
+
+inversor_growatt2 = {
+    'Fabricante_sigla': 'Growatt NEO 2000M-X',
+    'Entradas': '4',
+    'Monitoramento': 'SIM – Wireless',
+    'Pot_nom_max': '2 kW',
+    'Tensao_nom_freq': '220 V - 54/65 Hz',
+    'Tensao_max': '65 VCC',
+    'Tensao_saida': '160 – 285 V',
+    'Corrente_max_saida': '9,3 A',
+    'Eficiencia_max': '96,5 %',
+    'axlxp_inv': '396 × 300 × 45 mm',
+    'Peso_inv': '5 kg',
+    'Nome_inversor': 'Growatt',
+    'Link_inversor': '',
+    'App_inversor': '',
+    'Imagem_inversor': 'Imagens/inversor_growatt_2kw.jpg',
+}
 
 inversor_growatt225 = {'Fabricante_sigla':'Growatt NEO 2250M-X2',
                        'Entradas':'4',
@@ -93,14 +145,44 @@ inversor_Hoymiles = {
     'Corrente_max_saida': '5,21 A / 3,36 A',
     'Eficiencia_max': '96,50 % / 96,70%',
     'axlxp_inv': '176 x 280 x 33 mm',
-    'Peso_inv': '3,75 kg'
+    'Peso_inv': '3,75 kg',
+    'Imagem_inversor':'Imagens/inversor_hoymiles.jpg'
+}
+
+inversor_hyxipower_m2000 = {
+    'Fabricante_sigla': 'Hyxipower HYX-M2000-SW',
+    'Entradas': '4',
+    'Monitoramento': 'SIM – Wireless',
+    'Pot_nom_max': '2 kW',
+    'Tensao_nom_freq': '220 V - 50/60 Hz',
+    'Tensao_max': '65 VCC',
+    'Tensao_saida': '183 – 276 V',
+    'Corrente_max_saida': '9,09 A',
+    'Eficiencia_max': '96,70%',
+    'axlxp_inv': '310*236*35.5mm',
+    'Peso_inv': '5 kg',
+    'Nome_inversor': 'Hyxipower',
+    'Link_inversor': '',
+    'App_inversor': '',
+    'Imagem_inversor': 'Imagens/inversor_hyxipower.jpg',
 }
 dicionario = {}
 
-print("Escolha o tipo de módulo:\n[1]Trina Solar\n[2]Canadian Solar\n[3]Astronergy")
+print("Escolha o tipo de módulo:")
+print("[1] Trina Solar (TSM-695NEG21C.20)")
+print("[2] Canadian Solar (TCS6U-330P)")
+print("[3] Astronergy (CHSM6612M/HV - 375W)")
+print("[4] Gokin (GK-1-72HT585M)")
+print("[5] Hanersun (HN18-72H585)")
 tipo_mod = int(input(''))
-print("Escolha o tipo de inversor:\n[1]Growatt\n[2]Sun Grow\n[3]Hoymiles")
+
+print("Escolha o tipo de inversor:")
+print("[1] Growatt (NEO 2000M-X ou NEO 2250M-X2)")
+print("[2] Sungrow (SG3K-S)")
+print("[3] Hoymiles (MI-1500 / MI-700)")
+print("[4] Hyxipower (HYX-M2000-SW)")
 tipo_inv = int(input(''))
+
 print("Nome: ")
 nome = input('')
 
@@ -191,9 +273,20 @@ if tipo_mod == 1:
 elif tipo_mod == 2:
     dicionario.update(gerador_canadian)
     gerador_escolhido = gerador_canadian
+    imagem_gerador_placeholder = gerador_trina['Imagem_gerador']
 elif tipo_mod == 3:
     dicionario.update(gerador_astronergy) 
-    gerador_escolhido = gerador_astronergy   
+    gerador_escolhido = gerador_astronergy
+    imagem_gerador_placeholder = gerador_trina['Imagem_gerador']
+elif tipo_mod == 4: # Gokin GK-1-72HT585M (da imagem)
+    dicionario.update(gerador_gokin)
+    gerador_escolhido = gerador_gokin
+    imagem_gerador_placeholder = gerador_trina['Imagem_gerador']
+elif tipo_mod == 5: # Hanersun HN18-72H585
+    dicionario.update(gerador_hanersun_585)
+    gerador_escolhido = gerador_hanersun_585
+    imagem_gerador_placeholder = gerador_trina['Imagem_gerador']
+
 
 if tipo_inv == 1:
     dicionario.update(inversor_growatt225)
@@ -202,9 +295,15 @@ if tipo_inv == 1:
 elif tipo_inv == 2:
     dicionario.update(inversor_Sungrow)
     inversor_escolhido = inversor_Sungrow
+    imagem_inversor_placeholder = inversor_Sungrow['Imagem_inversor']
 elif tipo_inv == 3:
     dicionario.update(inversor_Hoymiles)
     inversor_escolhido = inversor_Hoymiles
+    imagem_inversor_placeholder = inversor_Hoymiles['Imagem_inversor']
+elif tipo_inv == 4: # Hyxipower HYX-M2000-SW
+    dicionario.update(inversor_hyxipower_m2000)
+    inversor_escolhido = inversor_hyxipower_m2000
+    imagem_inversor_placeholder = inversor_hyxipower_m2000['Imagem_inversor']
 
 #Cálculo do número estimado de módulos
 Pot_nom_com_virgula = float(dicionario['Pot_nom'].replace(',','.')) #porque o caralho do numero veio com ponto ao invés de vírgula
