@@ -1,10 +1,15 @@
 import pdfplumber
 import re
+import math
 from docxtpl import DocxTemplate
+from docxtpl import DocxTemplate, InlineImage
+from docx.shared import Inches, Cm
 
 rotulos = ['CEP','Nome','Endereco','Telefone','Email','Qtd_mod','Qtd_inv','Pot_nom']
 rotulos_pdf = ['CEP da UC com GD','Nome do Titular da UC com GD','Endereço','Telefone do Titular \(DDD \+ número\)','E-mail do Titular da UC com GD','Quantidade de Módulos','Quantidade de Inversores','Potência Total dos Módulos \(kW\)']
 energia_mensal = {'Energia_jan':0,'Energia_fev':0,'Energia_mar':0,'Energia_abr':0,'Energia_maio':0,'Energia_jun':0,'Energia_jul':0,'Enegia_ago':0,'Energia_set':0,'Energia_out':0,'Energia_nov':0,'Energia_dez':0}
+irradiacao = [5.01, 5.5, 5.1, 5.46, 5.56, 5.61, 5.83, 6.47, 5.91, 5.45, 4.75, 4.98]
+mes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 gerador_trina = {'Fabricante':'Trina Solar',
                  'SIGLA':'TSM-695NEG21C.20',
@@ -17,7 +22,8 @@ gerador_trina = {'Fabricante':'Trina Solar',
                  'Corrente_nom':'17,25 A',
                  'Corrente_cc':'18,28 A',
                  'axlxp':'2384 x 1303 x 33 mm',
-                 'Peso':'38,3 kg'}
+                 'Peso':'38,3 kg',
+                 'Imagem_gerador':'Imagens/Trina_gerador.jpg'}
 
 gerador_astronergy = {
     'Fabricante': 'Astronergy',
@@ -46,9 +52,6 @@ gerador_canadian = {'Fabricante':'Canadian Solar',
                     'Corrente_cc':'9,45 A',
                     'axlxp':'1990 x 992 x 40 mm',
                     'Peso':'22,4 kg',
-                    'Nome_gerador':'Growatt',
-                    'Link_gerador':'https://server.growatt.com/login',
-                    'App_gerador':'ShinePhone'
                     }
 
 inversor_growatt225 = {'Fabricante_sigla':'Growatt NEO 2250M-X2',
@@ -61,7 +64,11 @@ inversor_growatt225 = {'Fabricante_sigla':'Growatt NEO 2250M-X2',
                        'Corrente_max_saida':'10,23 A',
                        'Eficiencia_max':'96,5%',
                        'axlxp_inv':'396*270*45 mm',
-                       'Peso_inv':'5,1 kg'}
+                       'Peso_inv':'5,1 kg',
+                       'Nome_inversor':'Growatt',
+                       'Link_inversor':'https://server.growatt.com/login',
+                       'App_inversor':'ShinePhone',
+                       'Imagem_inversor':'Imagens/inversor_growatt.jpg'}
 
 inversor_Sungrow = {'Fabricante_sigla':'Sungrow SG3K-S',
                     'Entradas':'1',
@@ -176,9 +183,11 @@ Senha_login = f'{Nomes[0][0]}{Nomes[-1][0]}123456'
 Senha_login = Senha_login.lower()
 dicionario['Senha_login'] = Senha_login
 
+#Seleção dos módulos e  inversores
 if tipo_mod == 1:
     dicionario.update(gerador_trina)
     gerador_escolhido = gerador_trina # pra poder usar no cálculo N módulos
+    imagem_gerador_placeholder = gerador_trina['Imagem_gerador']
 elif tipo_mod == 2:
     dicionario.update(gerador_canadian)
     gerador_escolhido = gerador_canadian
@@ -188,17 +197,37 @@ elif tipo_mod == 3:
 
 if tipo_inv == 1:
     dicionario.update(inversor_growatt225)
+    inversor_escolhido = inversor_growatt225
+    imagem_inversor_placeholder = inversor_growatt225['Imagem_inversor']
 elif tipo_inv == 2:
     dicionario.update(inversor_Sungrow)
+    inversor_escolhido = inversor_Sungrow
 elif tipo_inv == 3:
     dicionario.update(inversor_Hoymiles)
+    inversor_escolhido = inversor_Hoymiles
 
-Pot_nom_com_virgula = float(dicionario['Pot_nom'].replace(',','.')) #porque o caralho do numero veio com ponto
+#Cálculo do número estimado de módulos
+Pot_nom_com_virgula = float(dicionario['Pot_nom'].replace(',','.')) #porque o caralho do numero veio com ponto ao invés de vírgula
 Pot_max_lista = gerador_escolhido['Pot_max'].rsplit(' ',1) #porque tem um W junto do valor
 Pot_max_valor = float(Pot_max_lista[0])/1000
 N_mod = round((Pot_nom_com_virgula/Pot_max_valor),2)
 dicionario['N_mod'] = N_mod
 
+#Cálculo da energia mensal produzida e total
+m = 0
+total_energia = 0
+for key in energia_mensal.keys():
+    energia_mensal[key] = round(Pot_nom_com_virgula * mes[m] * irradiacao[m] * 0.8,2)
+    m += 1
+    total_energia += energia_mensal[key]
+
+dicionario.update(energia_mensal)
+
+Total_energia = round(total_energia,2)
+dicionario['Total_energia']  = Total_energia 
+n = 10 
+Total_arredondado = n * math.ceil(Total_energia/n)
+dicionario['Total_arredondado'] = Total_arredondado
 
 
 template = 'D:/UnB/Python Stuff/Memorial Descritivo - Template.docx'
@@ -206,10 +235,12 @@ output = 'Memorial Preenchido Teste.docx'
 
 try:
     doc = DocxTemplate(template)
+    dicionario['imagem_gerador'] = InlineImage(doc, imagem_gerador_placeholder, width=Cm(4.0))
+    dicionario['imagem_inversor'] = InlineImage(doc, imagem_inversor_placeholder, width=Cm(3.5))
+
     doc.render(dicionario)
     doc.save(output)
     print(f"\nSUCESSO: Documento preenchido salvo como: {output}")
 
 except Exception as e:
     print(f"\nERRO ao preencher o documento com Docxtpl. Verifique se o template Word está fechado e o caminho correto. Detalhes: {e}")
-
