@@ -4,6 +4,7 @@ from docxtpl import DocxTemplate
 
 rotulos = ['CEP','Nome','Endereco','Telefone','Email','Qtd_mod','Qtd_inv','Pot_nom']
 rotulos_pdf = ['CEP da UC com GD','Nome do Titular da UC com GD','Endereço','Telefone do Titular \(DDD \+ número\)','E-mail do Titular da UC com GD','Quantidade de Módulos','Quantidade de Inversores','Potência Total dos Módulos \(kW\)']
+energia_mensal = {'Energia_jan':0,'Energia_fev':0,'Energia_mar':0,'Energia_abr':0,'Energia_maio':0,'Energia_jun':0,'Energia_jul':0,'Enegia_ago':0,'Energia_set':0,'Energia_out':0,'Energia_nov':0,'Energia_dez':0}
 
 gerador_trina = {'Fabricante':'Trina Solar',
                  'SIGLA':'TSM-695NEG21C.20',
@@ -44,7 +45,11 @@ gerador_canadian = {'Fabricante':'Canadian Solar',
                     'Corrente_nom':'8,88 A',
                     'Corrente_cc':'9,45 A',
                     'axlxp':'1990 x 992 x 40 mm',
-                    'Peso':'22,4 kg'}
+                    'Peso':'22,4 kg',
+                    'Nome_gerador':'Growatt',
+                    'Link_gerador':'https://server.growatt.com/login',
+                    'App_gerador':'ShinePhone'
+                    }
 
 inversor_growatt225 = {'Fabricante_sigla':'Growatt NEO 2250M-X2',
                        'Entradas':'4',
@@ -162,13 +167,24 @@ dicionario['Pot_mensal'] = Pot_mensal
 Pot_diaria = int((Pot_mensal / 30)//1)
 dicionario['Pot_diaria'] = Pot_diaria
 
+Nomes = dicionario['Nome'].split()
+Nome_capa = f'{Nomes[0]} {Nomes[-1]}'
+dicionario ['Nome_capa'] = Nome_capa
+Nome_login = f'{Nomes[0]}{Nomes[-1]}'
+dicionario['Nome_login'] = Nome_login
+Senha_login = f'{Nomes[0][0]}{Nomes[-1][0]}123456'
+Senha_login = Senha_login.lower()
+dicionario['Senha_login'] = Senha_login
 
 if tipo_mod == 1:
     dicionario.update(gerador_trina)
+    gerador_escolhido = gerador_trina # pra poder usar no cálculo N módulos
 elif tipo_mod == 2:
     dicionario.update(gerador_canadian)
+    gerador_escolhido = gerador_canadian
 elif tipo_mod == 3:
-    dicionario.update(gerador_astronergy)    
+    dicionario.update(gerador_astronergy) 
+    gerador_escolhido = gerador_astronergy   
 
 if tipo_inv == 1:
     dicionario.update(inversor_growatt225)
@@ -176,6 +192,14 @@ elif tipo_inv == 2:
     dicionario.update(inversor_Sungrow)
 elif tipo_inv == 3:
     dicionario.update(inversor_Hoymiles)
+
+Pot_nom_com_virgula = float(dicionario['Pot_nom'].replace(',','.')) #porque o caralho do numero veio com ponto
+Pot_max_lista = gerador_escolhido['Pot_max'].rsplit(' ',1) #porque tem um W junto do valor
+Pot_max_valor = float(Pot_max_lista[0])/1000
+N_mod = round((Pot_nom_com_virgula/Pot_max_valor),2)
+dicionario['N_mod'] = N_mod
+
+
 
 template = 'D:/UnB/Python Stuff/Memorial Descritivo - Template.docx'
 output = 'Memorial Preenchido Teste.docx'
