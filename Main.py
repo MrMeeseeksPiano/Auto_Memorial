@@ -120,6 +120,54 @@ gerador_hanersun_585 = {
     'Imagem_gerador':'Imagens/Trina_gerador.jpg'
 }
 
+gerador_hanersun_610 = {
+    'Fabricante': 'Hanersun',
+    'SIGLA': 'HN21RN-66HT610W',
+    'Tec_construcao': 'Monocristalino',
+    'Garantia': '12 anos',
+    'Pot_max': '610 W',
+    'Eficiencia': '22,6 %',
+    'Tensao_nom': '40,59 V',
+    'Tensao_aberto': '48,72 V',
+    'Corrente_nom': '15,03 A',
+    'Corrente_cc': '15,94 A',
+    'axlxp': '2382 x 1134 x 30 mm',
+    'Peso': '33,5 kg',
+    'Imagem_gerador': 'Imagens/Trina_gerador.jpg',
+}
+
+gerador_honor_700 = {
+    'Fabricante': 'Honor Solar',
+    'SIGLA': 'HY-M12/132G-700',
+    'Tec_construcao': 'Monocristalino',
+    'Garantia': '12 anos',
+    'Pot_max': '700 W',
+    'Eficiencia': '22,5 %',
+    'Tensao_nom': '41,78 V',
+    'Tensao_aberto': '49,83 V',
+    'Corrente_nom': '16,77 A',
+    'Corrente_cc': '17,82 A',
+    'axlxp': '2384 x 1303 x 33 mm',
+    'Peso': '37,5 kg',
+    'Imagem_gerador': 'Imagens/Trina_gerador.jpg',
+}
+
+gerador_znshine_700 = {
+    'Fabricante': 'ZNSHINE SOLAR',
+    'SIGLA': 'ZXM8-GPLD132-700W',
+    'Tec_construcao': 'Monocristalino N-Type TOPCon Double Glass',
+    'Garantia': '12 anos',
+    'Pot_max': '700 W',
+    'Eficiencia': '22,53 %',
+    'Tensao_nom': '40,40 V',
+    'Tensao_aberto': '48,20 V',
+    'Corrente_nom': '17,33 A',
+    'Corrente_cc': '18,32 A',
+    'axlxp': '2384 x 1303 x 35 mm',
+    'Peso': '38,5 kg',
+    'Imagem_gerador': 'Imagens/Trina_gerador.jpg',
+}
+
 inversor_growatt2 = {
     'Fabricante_sigla': 'Growatt NEO 2000M-X',
     'Entradas': '4',
@@ -133,8 +181,8 @@ inversor_growatt2 = {
     'axlxp_inv': '396 × 300 × 45 mm',
     'Peso_inv': '5 kg',
     'Nome_inversor': 'Growatt',
-    'Link_inversor': '',
-    'App_inversor': '',
+    'Link_inversor': 'https://server.growatt.com/login',
+    'App_inversor': 'ShinePhone',
     'Imagem_inversor': 'Imagens/inversor_growatt_2kw.jpg',
 }
 
@@ -165,7 +213,9 @@ inversor_Sungrow = {'Fabricante_sigla':'Sungrow SG3K-S',
                     'Eficiencia_max':'98,2 %',
                     'axlxp_inv':'370 x 300 x 125 mm',
                     'Peso_inv':'8,5 kg',
-                    'Imagem_inversor':'Imagens/inversor_hoymiles.jpg'}
+                    'Imagem_inversor':'Imagens/inversor_hoymiles.jpg',
+                    'Link_inversor': '',
+                    'App_inversor': '',}
 
 inversor_Hoymiles = {
     'Fabricante_sigla': 'Hoymiles MI-1500 / MI-700',
@@ -179,7 +229,27 @@ inversor_Hoymiles = {
     'Eficiencia_max': '96,50 % / 96,70%',
     'axlxp_inv': '176 x 280 x 33 mm',
     'Peso_inv': '3,75 kg',
-    'Imagem_inversor':'Imagens/inversor_hoymiles.jpg'
+    'Imagem_inversor':'Imagens/inversor_hoymiles.jpg',
+    'Link_inversor': 'http://global.hoymiles.com',
+    'App_inversor': 'S-miles Enduser',
+}
+
+inversor_hoymiles_2000 = {
+    'Fabricante_sigla': 'Hoymiles HMS-2000-4T',
+    'Entradas': '4',
+    'Monitoramento': 'SIM – Wireless',
+    'Pot_nom_max': '2 kW',
+    'Tensao_nom_freq': '220 V - 54/65 Hz',
+    'Tensao_max': '65 VCC',
+    'Tensao_saida': '183 – 228 V',
+    'Corrente_max_saida': '9,22 A',
+    'Eficiencia_max': '99,8 %',
+    'axlxp_inv': '331 x 218 x 40.6 mm',
+    'Peso_inv': '5,56 kg',
+    'Nome_inversor': 'Hoymiles',
+    'Link_inversor': 'http://global.hoymiles.com',
+    'App_inversor': 'S-miles Enduser',
+    'Imagem_inversor': 'Imagens/inversor_hoymiles.jpg',
 }
 
 inversor_hyxipower_m2000 = {
@@ -195,8 +265,8 @@ inversor_hyxipower_m2000 = {
     'axlxp_inv': '310*236*35.5mm',
     'Peso_inv': '5 kg',
     'Nome_inversor': 'Hyxipower',
-    'Link_inversor': '',
-    'App_inversor': '',
+    'Link_inversor': 'http://Hyxicloud.com',
+    'App_inversor': 'Hyxipower',
     'Imagem_inversor': 'Imagens/inversor_hyxipower.jpg',
 }
 
@@ -229,14 +299,19 @@ print("[4] Gokin (GK-1-72HT585M)")
 print("[5] Hanersun (HN18-72H585)")
 print("[6] Gokin (GK-2-66HTBD-700M)")
 print("[7] Astronergy (CHSM66RN(DG)/F-BH-600W)")
+print("[8] ZnShine (ZXM8-GPLD132-700W)")
+print("[9] Hanersun (HN21RN-66HT610W)")
+print("[10]Honor (HY-M12/132G-700)")
 tipo_mod = int(input(''))
 
 print("Escolha o tipo de inversor:")
-print("[1] Growatt (NEO 2000M-X ou NEO 2250M-X2)")
+print("[1] Growatt (NEO 2250M-X2)")
 print("[2] Sungrow (SG3K-S)")
 print("[3] Hoymiles (MI-1500 / MI-700)")
 print("[4] Hyxipower (HYX-M2000-SW)")
 print("[5] Solis (S5-GR3P6K)")
+print("[6] Hoymiles (HMS-2000-4T)")
+print("[7] Growatt (NEO 2000M-X)")
 tipo_inv = int(input(''))
 
 print("Nome: ")
@@ -352,7 +427,19 @@ elif tipo_mod == 6:
 elif tipo_mod == 7:
     dicionario.update(gerador_astronergy_600)
     gerador_escolhido = gerador_astronergy_600
-    imagem_gerador_placeholder = gerador_astronergy_600['Imagem_gerador']    
+    imagem_gerador_placeholder = gerador_astronergy_600['Imagem_gerador']   
+elif tipo_mod == 8:
+    dicionario.update(gerador_znshine_700)
+    gerador_escolhido = gerador_znshine_700
+    imagem_gerador_placeholder = gerador_znshine_700['Imagem_gerador']  
+elif tipo_mod == 9:
+    dicionario.update(gerador_hanersun_610)
+    gerador_escolhido = gerador_hanersun_610
+    imagem_gerador_placeholder = gerador_hanersun_610['Imagem_gerador']  
+elif tipo_mod == 10:
+    dicionario.update(gerador_honor_700)
+    gerador_escolhido = gerador_honor_700
+    imagem_gerador_placeholder = gerador_honor_700['Imagem_gerador']
 
 
 if tipo_inv == 1:
@@ -374,7 +461,15 @@ elif tipo_inv == 4:
 elif tipo_inv == 5: 
     dicionario.update(inversor_solis6k)
     inversor_escolhido = inversor_solis6k
-    imagem_inversor_placeholder = inversor_solis6k['Imagem_inversor']    
+    imagem_inversor_placeholder = inversor_solis6k['Imagem_inversor']
+elif tipo_inv == 6: 
+    dicionario.update(inversor_hoymiles_2000)
+    inversor_escolhido = inversor_hoymiles_2000
+    imagem_inversor_placeholder = inversor_hoymiles_2000['Imagem_inversor'] 
+elif tipo_inv == 7: 
+    dicionario.update(inversor_growatt2)
+    inversor_escolhido = inversor_growatt2
+    imagem_inversor_placeholder = inversor_growatt2['Imagem_inversor']        
 
 #Cálculo do número estimado de módulos
 Pot_nom_com_virgula = float(dicionario['Pot_nom'].replace(',','.')) #porque o caralho do numero veio com ponto ao invés de vírgula
