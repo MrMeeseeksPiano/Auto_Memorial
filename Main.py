@@ -41,6 +41,22 @@ gerador_astronergy = {
     'Imagem_gerador':'Imagens/Trina_gerador.jpg'
 }
 
+gerador_astronergy_600 = {
+    'Fabricante': 'Astronergy',
+    'SIGLA': 'CHSM66RN(DG)/F-BH-600W',
+    'Tec_construcao': 'Monocristalino',
+    'Garantia': '12 anos',
+    'Pot_max': '600 W',
+    'Eficiencia': '22,2 %',
+    'Tensao_nom': '41,05 V',
+    'Tensao_aberto': '48,44 V',
+    'Corrente_nom': '14,64 A',
+    'Corrente_cc': '15,78 A',
+    'axlxp': '2382 x 1134 x 30 mm',
+    'Peso': '33,5 kg',
+    'Imagem_gerador': 'Imagens/Trina_gerador.jpg',
+}
+
 gerador_canadian = {'Fabricante':'Canadian Solar',
                     'SIGLA':'TCS6U-330P',
                     'Tec_construcao':'Policristalino',
@@ -57,7 +73,7 @@ gerador_canadian = {'Fabricante':'Canadian Solar',
                     }
 
 gerador_gokin = {
-    'Fabricante': 'Gokin',
+    'Fabricante': 'Gokin Solar',
     'SIGLA': 'GK-1-72HT585M',
     'Tec_construcao': 'Monocristalino',
     'Garantia': '12 anos',
@@ -70,6 +86,22 @@ gerador_gokin = {
     'axlxp': '2310x1125x1259mm',
     'Peso': '26,8 kg',
     'Imagem_gerador':'Imagens/Trina_gerador.jpg'
+}
+
+gerador_gokin_700 = {
+    'Fabricante': 'Gokin Solar',
+    'SIGLA': 'GK-2-66HTBD-700M',
+    'Tec_construcao': 'Monocristalino',
+    'Garantia': '12 anos',
+    'Pot_max': '700 W',
+    'Eficiencia': '22,5 %',
+    'Tensao_nom': '41,1 V',
+    'Tensao_aberto': '47,9 V',
+    'Corrente_nom': '17,04 A',
+    'Corrente_cc': '18,8 A',
+    'axlxp': '2384 x 1303 x 33 mm',
+    'Peso': '37,5 kg',
+    'Imagem_gerador': 'Imagens/Trina_gerador.jpg',
 }
 
 gerador_hanersun_585 = {
@@ -132,7 +164,8 @@ inversor_Sungrow = {'Fabricante_sigla':'Sungrow SG3K-S',
                     'Corrente_max_saida':'13,7 A',
                     'Eficiencia_max':'98,2 %',
                     'axlxp_inv':'370 x 300 x 125 mm',
-                    'Peso_inv':'8,5 kg'}
+                    'Peso_inv':'8,5 kg',
+                    'Imagem_inversor':'Imagens/inversor_hoymiles.jpg'}
 
 inversor_Hoymiles = {
     'Fabricante_sigla': 'Hoymiles MI-1500 / MI-700',
@@ -166,6 +199,26 @@ inversor_hyxipower_m2000 = {
     'App_inversor': '',
     'Imagem_inversor': 'Imagens/inversor_hyxipower.jpg',
 }
+
+inversor_solis6k = {
+    'Fabricante_sigla': 'Solis S5-GR3P6K',
+    'Entradas': '2',
+    'Monitoramento': 'SIM – Wireless',
+    'Pot_nom_max': '6 kW',
+    'Tensao_nom_freq': '380 V - 50/60 Hz',
+    'Tensao_max': '1100 VCC',
+    'Tensao_saida': '380 V',
+    'Corrente_max_saida': '9.5 A',
+    'Eficiencia_max': '98,3%',
+    'axlxp_inv': '310 x 563 x 219 mm',
+    'Peso_inv': '17,8 kg',
+    'Nome_inversor': 'Solis',
+    'Link_inversor': '',
+    'App_inversor': '',
+    'Imagem_inversor': 'Imagens/inversor_solis_6kw.jpg',
+}
+
+
 dicionario = {}
 
 print("Escolha o tipo de módulo:")
@@ -174,6 +227,8 @@ print("[2] Canadian Solar (TCS6U-330P)")
 print("[3] Astronergy (CHSM6612M/HV - 375W)")
 print("[4] Gokin (GK-1-72HT585M)")
 print("[5] Hanersun (HN18-72H585)")
+print("[6] Gokin (GK-2-66HTBD-700M)")
+print("[7] Astronergy (CHSM66RN(DG)/F-BH-600W)")
 tipo_mod = int(input(''))
 
 print("Escolha o tipo de inversor:")
@@ -181,6 +236,7 @@ print("[1] Growatt (NEO 2000M-X ou NEO 2250M-X2)")
 print("[2] Sungrow (SG3K-S)")
 print("[3] Hoymiles (MI-1500 / MI-700)")
 print("[4] Hyxipower (HYX-M2000-SW)")
+print("[5] Solis (S5-GR3P6K)")
 tipo_inv = int(input(''))
 
 print("Nome: ")
@@ -253,8 +309,11 @@ dicionario['Bairro'] = Bairro
 
 Pot_mensal = int((Pot_ano_rounded/12)//1)
 dicionario['Pot_mensal'] = Pot_mensal
-Pot_diaria = int((Pot_mensal / 30)//1)
+Pot_diaria = float((Pot_mensal / 30))
+Pot_diaria = round(Pot_diaria,2)
 dicionario['Pot_diaria'] = Pot_diaria
+Pot_nom_calc = round(Pot_diaria/(0.8*5.34),2)
+dicionario['Pot_nom_calc'] = Pot_nom_calc
 
 Nomes = dicionario['Nome'].split()
 Nome_capa = f'{Nomes[0]} {Nomes[-1]}'
@@ -286,6 +345,14 @@ elif tipo_mod == 5: # Hanersun HN18-72H585
     dicionario.update(gerador_hanersun_585)
     gerador_escolhido = gerador_hanersun_585
     imagem_gerador_placeholder = gerador_trina['Imagem_gerador']
+elif tipo_mod == 6:
+    dicionario.update(gerador_gokin_700)
+    gerador_escolhido = gerador_gokin_700
+    imagem_gerador_placeholder = gerador_trina['Imagem_gerador']
+elif tipo_mod == 7:
+    dicionario.update(gerador_astronergy_600)
+    gerador_escolhido = gerador_astronergy_600
+    imagem_gerador_placeholder = gerador_astronergy_600['Imagem_gerador']    
 
 
 if tipo_inv == 1:
@@ -300,15 +367,20 @@ elif tipo_inv == 3:
     dicionario.update(inversor_Hoymiles)
     inversor_escolhido = inversor_Hoymiles
     imagem_inversor_placeholder = inversor_Hoymiles['Imagem_inversor']
-elif tipo_inv == 4: # Hyxipower HYX-M2000-SW
+elif tipo_inv == 4: 
     dicionario.update(inversor_hyxipower_m2000)
     inversor_escolhido = inversor_hyxipower_m2000
     imagem_inversor_placeholder = inversor_hyxipower_m2000['Imagem_inversor']
+elif tipo_inv == 5: 
+    dicionario.update(inversor_solis6k)
+    inversor_escolhido = inversor_solis6k
+    imagem_inversor_placeholder = inversor_solis6k['Imagem_inversor']    
 
 #Cálculo do número estimado de módulos
 Pot_nom_com_virgula = float(dicionario['Pot_nom'].replace(',','.')) #porque o caralho do numero veio com ponto ao invés de vírgula
 Pot_max_lista = gerador_escolhido['Pot_max'].rsplit(' ',1) #porque tem um W junto do valor
 Pot_max_valor = float(Pot_max_lista[0])/1000
+dicionario['Pot_max_valor'] = Pot_max_valor
 N_mod = round((Pot_nom_com_virgula/Pot_max_valor),2)
 dicionario['N_mod'] = N_mod
 
@@ -330,7 +402,7 @@ dicionario['Total_arredondado'] = Total_arredondado
 
 
 template = 'D:/UnB/Python Stuff/Memorial Descritivo - Template.docx'
-output = 'Memorial Preenchido Teste.docx'
+output = f'Memorial Preenchido {Nome_capa}.docx'
 
 try:
     doc = DocxTemplate(template)
